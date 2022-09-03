@@ -1,0 +1,226 @@
+<!DOCTYPE>
+<html>
+
+<head>
+	<title>Elemental Experiments</title>
+	<style>
+		.tab {
+			overflow: hidden;
+			border: 2px solid #cc33ff;
+			background-image: linear-gradient(to right, red, yellow, green, blue, indigo, violet);
+		}
+		.tab button {
+			background-color: inherit;
+			float: left;
+			border: none;
+			outline: none;
+			cursor: pointer;
+			padding: 14px 16px;
+			transition: 0.3s;
+			color: white;
+			width: 7.5%;
+			text-align: left;
+		}
+		.tab button:hover {
+			background-color: #ddd;
+		}
+		.tabContent {
+			display: none;
+			padding: 6px 12px;
+			border-top: none;
+		}
+		.sectionScore {
+			float: left;
+			transform: translateX(20px);
+		}
+		.text1 {
+			font-family: OCR A Std, monospace;
+			font-size: 175%;
+		}
+		.text2 {
+			font-family: OCR A Std, monospace;
+			font-size: 150%;
+		}
+		.text3 {
+			font-family: OCR A Std, monospace;
+			font-size: 60%;
+		}
+		.text4 {
+			font-family: OCR A Std, monospace;
+			font-size: 125%;
+		}
+		.atomDiagram {
+			float: right;
+			position: relative;
+			display: inline-block;
+		}
+		.atomDiagram #button1 {
+			position: absolute;
+			top: 45.5%;
+			left: 49.2%;
+		}
+		.atomDiagram #button2{
+			position: absolute;
+			top: 49.8%;
+			left: 49.8%;
+		}
+		.atomDiagram #button3{
+			position: absolute;
+			top: 36.11%;
+			left: 49.8%;
+		}
+		.elementAlgorithm {
+			text-align: center;
+			float: left;
+			position: relative;
+			left: 85px;
+			height: 50%;
+			width: 27%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="tab">
+		<button class="tabLinks" onclick="openPage(event, 'Home')" id="defaultOpen" style="text-align: center;">Home</button>
+		<button class="tabLinks" onclick="openPage(event, 'Elements')" id="defaultOpen" style="text-align: center;">Elements</button>
+		<button class="tabLinks" onclick="openPage(event, 'Compounds')" id="defaultOpen" style="text-align: center;">Compounds</button>
+		<button class="tabLinks" onclick="openPage(event, 'Options')" id="defaultOpen" style="text-align: center;">Options</button>
+		<button class="tabLinks" onclick="openPage(event, 'Statistics')" id="defaultOpen" style="text-align: center;">Statistics</button>
+		<button class="tabLinks" onclick="openPage(event, 'Achievments')" id="defaultOpen" style="text-align: center;">Achievments</button>
+	</div>
+	
+	<div id="Home" class="tabContent">
+		<div class="sectionScore">	
+			<div class="text1">
+				<h1><span id="joules">30</span> Joules</h1>
+			</div>
+			
+			<div class="text2">
+				<p><span id="joulesPerSecond">0</span> Joules Per Second</p>
+			</div>
+			
+			<div class="text4">
+				<p>Electrons: <span id="electrons">0</span></p>
+				<p>Protons: <span id="protons">0</span></p>
+				<p>Neutrons: <span id="neutrons">0</span></p>
+				<p>Electron Cost: <span id="electronCost">20</span></p>
+				<p>Proton Cost: <span id="protonCost">10</span></p>
+				<p>Neutron Cost: <span id="neutronCost">50</span></p>
+			</div>
+
+			<div class="text3">	
+				<p>(1 Electron & 1 Proton Needed To Start Joule Production)</p>
+			</div>
+			
+		</div>
+		
+		<div class="elementAlgorithm" style="border-width:3px; border-style:solid; border-color:#49494a">
+			<h1>Elements</h1>
+			<p>This atom is <span id="element">NA</span>.</p>
+		</div>		
+		
+		<div class="atomDiagram">
+			<img src="images/Empty Atom Diagram.png" alt="Empty Atom Diagram" width="500" height="500">
+			<button type="button" id="button1" onclick="buyProton">p+</button>
+			<button type="button" id="button2" onclick="buyNeutron">n</button>
+			<button type="button" id="button3" onclick="buyElectron">e-</button>
+		</div>
+	</div>
+	
+	<div id="Elements" class="tabContent">
+	
+	</div>
+	
+	<div id="Compounds" class="tabContent">
+	
+	</div>
+	
+	<div id="Options" class="tabContent">
+	
+	</div>
+	
+	<div id="Statistics" class="tabContent">
+	
+	</div>
+	
+	<div id="Achievments" class="tabContent">
+	
+	</div>
+	
+	<script>
+		var joules= 30;
+		var electrons= 0;
+		var electronCost= 20;
+		var neutrons= 0;
+		var nerutronsCost= 50;
+		var protons= 0;
+		var protonCost= 10;
+	
+		document.getElementById("button1").addEventListener("click",buyProton);
+		document.getElementById("button2").addEventListener("click",buyNeutron);
+		document.getElementById("button3").addEventListener("click",buyElectron);
+	
+		function openPage(evt, pageName) {
+			var i, tabContent, tablinks;
+			tabContent = document.getElementsByClassName("tabContent");
+			for (i = 0; i < tabContent.length; i++) {
+				tabContent[i].style.display = "none";
+			}
+			document.getElementById(pageName).style.display = "block";
+			evt.currentTarget.className += " active";
+		}
+		document.getElementById("defaultOpen").click();
+		
+		function buyProton() {
+			if (joules >= protonCost) {
+				joules = joules - protonCost;
+				protons = protons + 1;
+				protonCost = Math.round(protonCost * 1.5);
+				
+				document.getElementById("joules").innerHTML = joules;
+				document.getElementById("protons").innerHTML = protons;
+				document.getElementById("protonCost").innerHTML = protonCost;	
+			}
+		}
+		
+		function buyElectron() {
+			if (joules >= electronCost) {
+				joules = joules - electronCost;
+				electrons = electrons + 1;
+				electronCost = Math.round(electronCost * 1.5);
+				
+				document.getElementById("joules").innerHTML = joules;
+				document.getElementById("electrons").innerHTML = electrons;
+				document.getElementById("electronCost").innerHTML = electronCost;	
+			}
+		}
+		
+		function buyNeutron() {
+			if (joules >= neutronCost) {
+				joules = joules - neutronCost;
+				neutrons = neutrons + 1;
+				neutronCost = Math.round(neutronCost * 1.5);
+				document.getElementById("joules").innerHTML = joules;
+				document.getElementById("neutrons").innerHTML = neutrons;
+				document.getElementById("neutronCost").innerHTML = neutronCost;	
+			}
+		}
+		
+		setInterval(function() {
+			if (protons > 0 && electrons > 0) {
+				joules = joules + (protons) + (electrons * 2) + (neutrons * 5);
+			}
+			joulesPerSecond = (protons) + (electrons * 2) + (neutrons * 5);
+			document.getElementById("joules").innerHTML = joules;
+			document.getElementById("joulesPerSecond").innerHTML = joulesPerSecond;
+		}, 1000);
+	</script>
+	
+	
+	<script>
+		var element =
+	</script>
+</body>
+
+</html>
